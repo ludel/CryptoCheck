@@ -90,7 +90,7 @@ def get_list_crypto():
     req = requests.get(BASE_URL + extra_url).json()["Data"]
     fullname = ""
     for value in req.values():
-        fullname += value["Symbol"] + ","
+        fullname += value["FullName"] + "\n"
 
     return fullname
 
