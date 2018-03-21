@@ -1,6 +1,7 @@
 import requests
 import matplotlib.pyplot as plt
 from datetime import datetime
+from sklearn.ensemble import RandomForestRegressor
 
 BASE_URL = "https://min-api.cryptocompare.com/"
 
@@ -66,6 +67,9 @@ def show_historic_graph(unit, devise, crypto, limit):
     for i in req:
         time.append(datetime.fromtimestamp(i['time']))
         price.append(i['close'])
+
+    random_forest = RandomForestRegressor(n_estimators=10, verbose=True)
+    random_forest.fit(time, price)
     plt.figure(figsize=(17, 6))
     plt.plot(time, price)
 
