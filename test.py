@@ -47,5 +47,6 @@ def compare(prediction):
     plt.show()
 
 
-pre = predict(600)
-compare(pre)
+if __name__ == "__main__":
+    pre = predict(600)
+    compare(pre)
