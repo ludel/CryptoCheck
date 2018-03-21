@@ -29,14 +29,16 @@ def main():
             generate_list_crypto(input("Chemin complet du fichier : "))
         elif choice == 2:
             devise = check_input(input("Devise (EUR) : "), "EUR")
+            quantity = int(check_input(input("Quantité (1): "), "1"))
             crypto = check_input(input("Crypto (BTC) : "), "BTC")
-            print("1 {} = {} {}".format(crypto, get_current_price(devise, crypto), devise))
+            print("{} {} = {} {}".format(quantity, crypto, quantity*get_current_price(devise, crypto), devise))
         elif choice == 3:
             lenght = input("Unité [day, hour, minute] : ")
             devise = check_input(input("Devise (EUR) : "), "EUR")
             crypto = check_input(input("Crypto (BTC) : "), "BTC")
             limit = input("Durée en unité : ")
             show_historic_graph(lenght, devise, crypto, limit)
+
         elif choice == 4:
             devise = check_input(input("Devise (EUR) : "), "EUR")
             crypto = check_input(input("Crypto (BTC,ETH,BCH,NEO,LTC,DASH,DGD,ZEH,XRM,REP) : "),
@@ -81,6 +83,7 @@ def show_histogram_graph(devise, crypto):
         crypto.append(key)
     plt.figure(figsize=(17, 6))
     plt.bar(crypto, price)
+
     return plt.show()
 
 
@@ -100,7 +103,7 @@ def generate_list_crypto(fullpath):
     try:
         mon_fichier = open(fullpath, "w")
         mon_fichier.write(get_list_crypto())
-        print(f"File create at {fullpath}")
+        print("File create at {}".format(fullpath))
     except PermissionError:
         exit("PermissionError: we have no right on {0}".format(fullpath))
     except IsADirectoryError:
@@ -110,6 +113,7 @@ def generate_list_crypto(fullpath):
 def check_input(input, default):
     if not input:
         input = default
+
     return input.upper()
 
 
