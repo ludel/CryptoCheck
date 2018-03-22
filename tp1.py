@@ -6,18 +6,7 @@ BASE_URL = "https://min-api.cryptocompare.com/"
 
 
 def main():
-    print("============================", end="\n")
-    print("--- === Crypto Check === ---", end="\n")
-    print("============================", end=2*"\n")
-
-    text = "0 : " + str(get_list_crypto.__doc__) + "\n" \
-           "1 : " + str(generate_list_crypto.__doc__) + "\n" \
-           "2 : " + str(get_current_price.__doc__) + "\n" \
-           "3 : " + str(show_historic_graph.__doc__) + "\n" \
-           "4 : " + str(show_histogram_graph.__doc__) + "\n" \
-
-    print(text)
-
+    show_info()
     while True:
         try:
             choice = int(input("Choix : "))
@@ -28,26 +17,40 @@ def main():
         elif choice == 1:
             generate_list_crypto(input("Chemin complet du fichier : "))
         elif choice == 2:
-            devise = check_input(input("Devise (EUR) : "), "EUR")
-            quantity = int(check_input(input("Quantité (1): "), "1"))
-            crypto = check_input(input("Crypto (BTC) : "), "BTC")
+            devise = check_str(input("Devise (EUR) : "), "EUR")
+            quantity = check_int(input("Quantité (1): "), 1)
+            crypto = check_str(input("Crypto (BTC) : "), "BTC")
             print("{} {} = {} {}".format(quantity, crypto, quantity*get_current_price(devise, crypto), devise))
         elif choice == 3:
             lenght = input("Unité [day, hour, minute] : ")
-            devise = check_input(input("Devise (EUR) : "), "EUR")
-            crypto = check_input(input("Crypto (BTC) : "), "BTC")
-            limit = input("Durée en unité : ")
+            devise = check_str(input("Devise (EUR) : "), "EUR")
+            crypto = check_str(input("Crypto (BTC) : "), "BTC")
+            limit = check_int(input("Durée en unité (200) : "), 200)
             show_historic_graph(lenght, devise, crypto, limit)
 
         elif choice == 4:
-            devise = check_input(input("Devise (EUR) : "), "EUR")
-            crypto = check_input(input("Crypto (BTC,ETH,BCH,NEO,LTC,DASH,DGD,ZEH,XRM,REP) : "),
+            devise = check_str(input("Devise (EUR) : "), "EUR")
+            crypto = check_str(input("Crypto (BTC,ETH,BCH,NEO,LTC,DASH,DGD,ZEH,XRM,REP) : "),
                                  "ETH,BCH,NEO,LTC,DASH,DGD,ZEH,XRM,REP")
             show_histogram_graph(devise, crypto)
         else:
             break
 
     print("Process end")
+
+
+def show_info():
+    print("============================", end="\n")
+    print("--- === Crypto Check === ---", end="\n")
+    print("============================", end=2 * "\n")
+
+    text = "0 : " + str(get_list_crypto.__doc__) + "\n" \
+           "1 : " + str(generate_list_crypto.__doc__) + "\n" \
+           "2 : " + str(get_current_price.__doc__) + "\n" \
+           "3 : " + str(show_historic_graph.__doc__) + "\n" \
+           "4 : " + str(show_histogram_graph.__doc__) + "\n"
+    print(text)
+
 
 
 def get_current_price(devise, crypto):
@@ -110,11 +113,20 @@ def generate_list_crypto(fullpath):
         exit("IsADirectoryError: The destination path is a folder not a file")
 
 
-def check_input(input, default):
+def check_str(input, default):
     if not input:
         input = default
-
     return input.upper()
+
+
+def check_int(input, default):
+    if not input:
+        input = default
+    try:
+        int(input)
+    except:
+        exit('ErrorValue: invalide caractere')
+    return input
 
 
 if __name__ == '__main__':

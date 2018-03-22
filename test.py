@@ -5,16 +5,19 @@ import pandas
 from datetime import datetime
 
 BASE_URL = "https://min-api.cryptocompare.com/data/histoday?"
-NBR_TEST = 70
+NBR_TEST = 50
 
 
-def predict(limite):
-    req = requests.get(BASE_URL + "fsym=ETC&tsym=EUR&limit={}".format(limite)).json()["Data"]
+def predict(limit):
+    req = requests.get(BASE_URL + "fsym=ETC&tsym=EUR&limit={}".format(limit)).json()["Data"]
     df = pandas.DataFrame.from_dict(req)
 
     df.drop(['time'], axis=1, inplace=True)
     size = df.close.size
     df['id'] = [x for x in range(size)]
+
+    df['mean'] = (df['high'] + df['low']) / 2
+    df['diff'] = df['open'] - df['close']
 
     df_train = df.loc[df.id < size - NBR_TEST - 1]
     df_test = df.loc[df.id >= size - NBR_TEST - 1]
@@ -25,11 +28,10 @@ def predict(limite):
 
     x_train = df_train.drop(['close', 'id'], axis=1)
     y_train = df_train['close']
-    print(df_train)
 
-    random_forest = RandomForestRegressor(n_estimators=100, n_jobs=4, verbose=True)
+    random_forest = RandomForestRegressor(n_estimators=200, n_jobs=4, verbose=True)
     random_forest.fit(x_train, y_train)
-    print("Score : {}".format(random_forest.score(x_test, y_test)*100))
+    print("Score : {}".format(random_forest.score(x_test, y_test) * 100))
     return random_forest.predict(x_test)
 
 
@@ -48,5 +50,5 @@ def compare(prediction):
 
 
 if __name__ == "__main__":
-    pre = predict(600)
+    pre = predict(2000)
     compare(pre)
