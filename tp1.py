@@ -45,7 +45,8 @@ def show_info():
            "1 : " + str(generate_list_crypto.__doc__) + "\n" \
            "2 : " + str(get_current_price.__doc__) + "\n" \
            "3 : " + str(show_historic_graph.__doc__) + "\n" \
-           "4 : " + str(show_histogram_graph.__doc__) + "\n"
+           "4 : " + str(show_histogram_graph.__doc__) + "\n" \
+           "5 : Exit \n"
     print(text)
 
 
@@ -122,7 +123,7 @@ def check_int(input, default):
         input = default
     try:
         input = int(input)
-    except:
+    except ValueError:
         exit('ErrorValue: invalide caractere')
     return input
 
