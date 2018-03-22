@@ -8,10 +8,7 @@ BASE_URL = "https://min-api.cryptocompare.com/"
 def main():
     show_info()
     while True:
-        try:
-            choice = int(input("Choix : "))
-        except:
-            break
+        choice = check_int(input("Choix : "), 0)
         if choice == 0:
             print(get_list_crypto())
         elif choice == 1:
@@ -50,7 +47,6 @@ def show_info():
            "3 : " + str(show_historic_graph.__doc__) + "\n" \
            "4 : " + str(show_histogram_graph.__doc__) + "\n"
     print(text)
-
 
 
 def get_current_price(devise, crypto):
@@ -111,6 +107,8 @@ def generate_list_crypto(fullpath):
         exit("PermissionError: we have no right on {0}".format(fullpath))
     except IsADirectoryError:
         exit("IsADirectoryError: The destination path is a folder not a file")
+    except FileNotFoundError:
+        exit("FileNotFoundError: No such file or directory :{}".format(fullpath))
 
 
 def check_str(input, default):
@@ -123,7 +121,7 @@ def check_int(input, default):
     if not input:
         input = default
     try:
-        int(input)
+        input = int(input)
     except:
         exit('ErrorValue: invalide caractere')
     return input
