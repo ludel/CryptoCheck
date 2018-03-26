@@ -24,7 +24,6 @@ def main():
             crypto = check_str(input("Crypto (BTC) : "), "BTC")
             limit = check_int(input("Durée en unité (200) : "), 200)
             show_historic_graph(lenght, devise, crypto, limit)
-
         elif choice == 4:
             devise = check_str(input("Devise (EUR) : "), "EUR")
             crypto = check_str(input("Crypto (BTC,ETH,BCH,NEO,LTC,DASH,DGD,ZEH,XRM,REP) : "), "ETH,BCH,NEO,LTC,DASH,DGD,ZEH,XRM,REP")
@@ -42,7 +41,7 @@ def show_info():
 
     text = {0: get_list_crypto.__doc__,
             1: generate_list_crypto.__doc__,
-            2: get_list_crypto.__doc__,
+            2: get_current_price.__doc__,
             3: show_historic_graph.__doc__,
             4: show_histogram_graph.__doc__,
             5: "Exit"}
