@@ -48,7 +48,7 @@ def show_info():
             5: "Exit"}
 
     for key, value in text.items():
-        print(key, value)
+        print(key, value, sep=" : ")
 
 
 
