@@ -27,8 +27,7 @@ def main():
 
         elif choice == 4:
             devise = check_str(input("Devise (EUR) : "), "EUR")
-            crypto = check_str(input("Crypto (BTC,ETH,BCH,NEO,LTC,DASH,DGD,ZEH,XRM,REP) : "),
-                                 "ETH,BCH,NEO,LTC,DASH,DGD,ZEH,XRM,REP")
+            crypto = check_str(input("Crypto (BTC,ETH,BCH,NEO,LTC,DASH,DGD,ZEH,XRM,REP) : "), "ETH,BCH,NEO,LTC,DASH,DGD,ZEH,XRM,REP")
             show_histogram_graph(devise, crypto)
         else:
             break
@@ -41,13 +40,16 @@ def show_info():
     print("--- === Crypto Check === ---", end="\n")
     print("============================", end=2 * "\n")
 
-    text = "0 : " + str(get_list_crypto.__doc__) + "\n" \
-           "1 : " + str(generate_list_crypto.__doc__) + "\n" \
-           "2 : " + str(get_current_price.__doc__) + "\n" \
-           "3 : " + str(show_historic_graph.__doc__) + "\n" \
-           "4 : " + str(show_histogram_graph.__doc__) + "\n" \
-           "5 : Exit \n"
-    print(text)
+    text = {0: get_list_crypto.__doc__,
+            1: generate_list_crypto.__doc__,
+            2: show_historic_graph.__doc__,
+            3: show_historic_graph.__doc__,
+            4: show_histogram_graph.__doc__,
+            5: "Exit"}
+
+    for key, value in text.items():
+        print(key, value)
+
 
 
 def get_current_price(devise, crypto):
