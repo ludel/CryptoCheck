@@ -5,7 +5,7 @@ import pandas
 from datetime import datetime
 
 BASE_URL = "https://min-api.cryptocompare.com/data/histoday?"
-NBR_TEST = 50
+NBR_TEST = 70
 
 
 def predict(limit):
