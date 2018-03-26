@@ -12,12 +12,12 @@ def main():
         if choice == 0:
             print(get_list_crypto())
         elif choice == 1:
-            generate_list_crypto(input("Chemin complet du fichier : "))
+            generate_file_list_crypto(input("Chemin complet du fichier : "))
         elif choice == 2:
             devise = check_str(input("Devise (EUR) : "), "EUR")
             quantity = check_int(input("Quantité (1): "), 1)
             crypto = check_str(input("Crypto (BTC) : "), "BTC")
-            print("{} {} = {} {}".format(quantity, crypto, quantity*get_current_price(devise, crypto), devise))
+            print("{} {} = {} {}".format(quantity, crypto, quantity * get_current_price(devise, crypto), devise))
         elif choice == 3:
             lenght = input("Unité [day, hour, minute] : ")
             devise = check_str(input("Devise (EUR) : "), "EUR")
@@ -26,12 +26,11 @@ def main():
             show_historic_graph(lenght, devise, crypto, limit)
         elif choice == 4:
             devise = check_str(input("Devise (EUR) : "), "EUR")
-            crypto = check_str(input("Crypto (BTC,ETH,BCH,NEO,LTC,DASH,DGD,ZEH,XRM,REP) : "), "ETH,BCH,NEO,LTC,DASH,DGD,ZEH,XRM,REP")
+            crypto = check_str(input("Crypto (BTC,ETH,BCH,NEO,LTC,DASH,DGD,ZEH,XRM,REP) : "),
+                               "ETH,BCH,NEO,LTC,DASH,DGD,ZEH,XRM,REP")
             show_histogram_graph(devise, crypto)
         else:
-            break
-
-    print("Process end")
+            quite()
 
 
 def show_info():
@@ -39,15 +38,15 @@ def show_info():
     print("--- === Crypto Check === ---", end="\n")
     print("============================", end=2 * "\n")
 
-    text = {0: get_list_crypto.__doc__,
-            1: generate_list_crypto.__doc__,
-            2: get_current_price.__doc__,
-            3: show_historic_graph.__doc__,
-            4: show_histogram_graph.__doc__,
-            5: "Exit"}
+    text = {0: get_list_crypto,
+            1: generate_file_list_crypto,
+            2: get_current_price,
+            3: show_historic_graph,
+            4: show_histogram_graph,
+            5: quite}
 
     for key, value in text.items():
-        print(key, value, sep=" : ")
+        print(key, value.__doc__, sep=" : ")
 
 
 def get_current_price(devise, crypto):
@@ -98,7 +97,7 @@ def get_list_crypto():
     return fullname
 
 
-def generate_list_crypto(fullpath):
+def generate_file_list_crypto(fullpath):
     """Génére un fichier de toutes les cryptomonnaies disponibles"""
     try:
         mon_fichier = open(fullpath, "w")
@@ -110,6 +109,11 @@ def generate_list_crypto(fullpath):
         exit("IsADirectoryError: The destination path is a folder not a file")
     except FileNotFoundError:
         exit("FileNotFoundError: No such file or directory :{}".format(fullpath))
+
+
+def quite():
+    """Quitter le programme"""
+    exit()
 
 
 def check_str(input, default):
