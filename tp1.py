@@ -124,7 +124,7 @@ def check_int(input, default):
     try:
         input = int(input)
     except ValueError:
-        exit('ErrorValue: invalide caractere')
+        exit('ErrorValue: invalid character')
     return input
 
 
